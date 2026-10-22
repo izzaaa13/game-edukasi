@@ -1,184 +1,325 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
 
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap');
+
+* {
+  box-sizing: border-box;
 }
 
-.hero {
+:root {
+  font-family: 'Nunito', sans-serif;
+  color: #124d91;
+  font-synthesis: none;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  width: 100%;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% 30%, #ffffff 0%, transparent 60%),
+    linear-gradient(135deg, #c7eaff, #e4f5ff);
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.game-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0;
+}
+
+.game-card {
   position: relative;
+  isolation: isolate;
+  width: min(100%, 520px);
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: #30a8f6;
+  box-shadow: 0 15px 45px #1767a82b;
+}
 
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
+.game-art {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  user-select: none;
+  pointer-events: none;
+  transform: scale(1.001);
+  animation: scene-entrance 900ms ease-out both;
+}
+
+.game-art.adventure {
+  animation: adventure-zoom 800ms ease-in-out both;
+}
+
+@keyframes scene-entrance {
+  from {
+    opacity: 0.5;
+    transform: scale(1.04);
   }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-#center {
+@keyframes adventure-zoom {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.035);
+  }
+  100% {
+    transform: scale(1.01);
+  }
+}
+
+.hotspot {
+  position: absolute;
+  z-index: 3;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 30px;
+  transition: background 180ms, box-shadow 180ms, transform 180ms;
+}
+
+.hotspot:hover {
+  background: #ffffff12;
+  box-shadow: 0 0 0 3px #ffffff80,
+              0 0 20px #fff8;
+}
+
+.hotspot:active {
+  transform: scale(0.96);
+}
+
+.hotspot:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 2px;
+}
+
+.start-hotspot {
+  left: 20%;
+  top: 43%;
+  width: 60%;
+  height: 9%;
+}
+
+.settings-hotspot {
+  top: 2.5%;
+  right: 3.5%;
+  width: 9%;
+  height: 5%;
+  border-radius: 50%;
+}
+
+.mission-hotspot {
+  top: 9%;
+  right: 4%;
+  width: 33%;
+  height: 10%;
+}
+
+.sparkle {
+  position: absolute;
+  z-index: 2;
+  color: #fff6a0;
+  pointer-events: none;
+  text-shadow: 0 0 12px #ffffff;
+  animation: sparkle-float 2s ease-in-out infinite alternate;
+}
+
+.sparkle-one {
+  top: 45%;
+  left: 17%;
+  font-size: 22px;
+}
+
+.sparkle-two {
+  top: 41%;
+  right: 15%;
+  font-size: 28px;
+  animation-delay: -1s;
+}
+
+@keyframes sparkle-float {
+  from {
+    opacity: 0.3;
+    transform: scale(0.65) rotate(-15deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.2) rotate(15deg);
+  }
+}
+
+.bottom-hotspots {
+  position: absolute;
+  z-index: 4;
+  bottom: 1.7%;
+  left: 6%;
+  width: 88%;
+  height: 8.5%;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+}
+
+.tab-hotspot {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border: 0;
+  border-radius: 18px;
+  background: transparent;
+  color: #315b88;
+  transition: background 180ms, transform 180ms;
 }
 
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+.tab-hotspot span {
+  font-size: clamp(17px, 5vw, 26px);
+  line-height: 1.1;
+  font-weight: 900;
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
+.tab-hotspot small {
+  font-size: clamp(8px, 2.4vw, 12px);
+  font-weight: 800;
 }
 
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+.tab-hotspot:hover {
+  background: #d8edff90;
+  transform: translateY(-2px);
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+.tab-hotspot.selected {
+  background: #a8d7ff75;
+  color: #075cbe;
 }
 
-.ticks {
-  position: relative;
+.popup,
+.tab-popup {
+  position: absolute;
+  z-index: 10;
+  left: 9%;
+  right: 9%;
+  top: 37%;
+  padding: 24px 18px;
+  text-align: center;
+  border: 2px solid #fff;
+  border-radius: 26px;
+  background: linear-gradient(145deg, #fffffffa, #e2f4ffff);
+  box-shadow: 0 12px 40px #07509b55,
+              inset 0 2px 0 white;
+  animation: popup-in 300ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.popup h2,
+.popup h3,
+.tab-popup h2 {
+  margin: 4px 0 10px;
+  font-weight: 900;
+}
+
+.popup p,
+.tab-popup p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.popup button {
+  display: block;
   width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  color: white;
+  background: linear-gradient(#258be9, #0753a5);
+  border: 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 0 #0b3976;
+  font-weight: 900;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
+.popup button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #0b3976;
+}
+
+.popup .close-button {
+  color: #21527e;
+  background: #e0f0ff;
+  box-shadow: none;
+}
+
+.popup-emoji {
+  font-size: 42px;
+}
+
+.tab-popup {
+  top: auto;
+  bottom: 13%;
+  padding: 22px;
+}
+
+.tab-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: transparent;
+  border: 0;
+  font-size: 20px;
+  color: #245b91;
+}
+
+@keyframes popup-in {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (min-width: 700px) {
+  .game-page {
+    padding: 20px;
   }
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
+  .game-card {
+    border-radius: 22px;
   }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition: none !important;
   }
 }

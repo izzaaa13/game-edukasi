@@ -1,122 +1,126 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import { useState } from "react";
+import "./App.css";
+
+export default function App() {
+  const [started, setStarted] = useState(false);
+  const [activeTab, setActiveTab] = useState("Beranda");
+  const [settings, setSettings] = useState(false);
+
+  const tabs = [
+    { name: "Beranda", icon: "⌂" },
+    { name: "Peta", icon: "♧" },
+    { name: "Prestasi", icon: "🏆" },
+    { name: "Materi", icon: "▤" },
+    { name: "Profil", icon: "♙" },
+  ];
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Aplikasi Saya</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
+    <main className="game-page">
+      <div className="game-card">
+        <img
+          className={`game-art ${started ? "adventure" : ""}`}
+          src="/game-home2.png"
+          alt="Petualangan Bangun Datar"
+        />
+
+        <div className="sparkle sparkle-one">✦</div>
+        <div className="sparkle sparkle-two">✧</div>
+
         <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+          className="hotspot start-hotspot"
+          aria-label="Mulai petualangan"
+          onClick={() => setStarted(true)}
+        />
 
-      <div className="ticks"></div>
+        <button
+          className="hotspot settings-hotspot"
+          aria-label="Pengaturan"
+          onClick={() => setSettings(!settings)}
+        />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+        <button
+          className="hotspot mission-hotspot"
+          aria-label="Misi harian"
+          onClick={() => setActiveTab("Prestasi")}
+        />
+
+        {settings && (
+          <div className="popup">
+            <h3>⚙ Pengaturan</h3>
+            <p>Petualangan Bangun Datar</p>
+            <button onClick={() => setSettings(false)}>
+              Tutup
+            </button>
+          </div>
+        )}
+
+        {started && (
+          <div className="popup adventure-popup">
+            <div className="popup-emoji">🎮</div>
+            <h2>Petualangan Dimulai!</h2>
+            <p>
+              Yuk, kenali bentuk-bentuk bangun datar
+              dan kumpulkan bintang!
+            </p>
+            <button
+              onClick={() => {
+                setStarted(false);
+                setActiveTab("Peta");
+              }}
+            >
+              Jelajahi Peta →
+            </button>
+            <button
+              className="close-button"
+              onClick={() => setStarted(false)}
+            >
+              Kembali
+            </button>
+          </div>
+        )}
+
+        <div className="bottom-hotspots">
+          {tabs.map((tab,) => (
+            <button
+              key={tab.name}
+              className={`tab-hotspot ${
+                activeTab === tab.name ? "selected" : ""
+              }`}
+              aria-label={tab.name}
+              onClick={() => {
+                setActiveTab(tab.name);
+                setStarted(false);
+              }}
+            >
+              <span>{tab.icon}</span>
+              <small>{tab.name}</small>
+            </button>
+          ))}
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        {activeTab !== "Beranda" && !started && (
+          <div className="tab-popup">
+            <button
+              className="tab-close"
+              onClick={() => setActiveTab("Beranda")}
+            >
+              ✕
+            </button>
+            <h2>{activeTab}</h2>
+            <p>
+              {activeTab === "Peta" &&
+                "Jelajahi dunia dan temukan level baru!"}
+              {activeTab === "Prestasi" &&
+                "Selesaikan misi dan kumpulkan bintang!"}
+              {activeTab === "Materi" &&
+                "Belajar segitiga, persegi, lingkaran, dan lainnya."}
+              {activeTab === "Profil" &&
+                "Lihat profil dan perkembangan belajarmu."}
+            </p>
+          </div>
+        )}
+      </div>
+    </main>
+  );
 }
-
-export default App
