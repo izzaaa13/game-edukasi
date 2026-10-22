@@ -23,7 +23,7 @@ export default function App() {
           src="/game-home2.png"
           alt="Petualangan Bangun Datar"
         />
-
+ 
         <div className="sparkle sparkle-one">✦</div>
         <div className="sparkle sparkle-two">✧</div>
 
